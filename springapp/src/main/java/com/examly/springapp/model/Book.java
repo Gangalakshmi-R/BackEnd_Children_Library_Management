@@ -7,5 +7,8 @@ import jakarta.persistence.Id;
 public class Book {
     @Id
     int bookId;
+    String title;
+    String author;
+    Boolean available;
     
 }
