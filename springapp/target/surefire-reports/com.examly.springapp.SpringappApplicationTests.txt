@@ -1,131 +1,36 @@
 -------------------------------------------------------------------------------
 Test set: com.examly.springapp.SpringappApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 80, Failures: 52, Errors: 0, Skipped: 0, Time elapsed: 4.777 s <<< FAILURE! - in com.examly.springapp.SpringappApplicationTests
-com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_PostMapping  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @PostMapping found in BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_PostMapping(SpringappApplicationTests.java:363)
-
-com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_GetMapping  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @GetMapping found in BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_GetMapping(SpringappApplicationTests.java:389)
-
-com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_PutMapping  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @PutMapping found in BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_PutMapping(SpringappApplicationTests.java:414)
-
-com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_DeleteMapping  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @DeleteMapping found in BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day6_test_BookCategoryController_Has_DeleteMapping(SpringappApplicationTests.java:439)
-
-com.examly.springapp.SpringappApplicationTests.Day6_testCreateCategory_NoBody_StatusBadRequest  Time elapsed: 0.061 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<400> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day6_testCreateCategory_NoBody_StatusBadRequest(SpringappApplicationTests.java:454)
-
-com.examly.springapp.SpringappApplicationTests.Day6_testGetAllCategories_StatusNoContent  Time elapsed: 0.005 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<204> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day6_testGetAllCategories_StatusNoContent(SpringappApplicationTests.java:462)
-
-com.examly.springapp.SpringappApplicationTests.Day6_testGetCategoryById_StatusNotFound  Time elapsed: 0.008 s  <<< FAILURE!
-java.lang.AssertionError: 
-Response content
-Expected: a string containing "Book category not found"
-     but: was ""
-	at com.examly.springapp.SpringappApplicationTests.Day6_testGetCategoryById_StatusNotFound(SpringappApplicationTests.java:473)
-
-com.examly.springapp.SpringappApplicationTests.Day7_test_BookCategoryController_Has_RequestMapping  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @RequestMapping found on BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookCategoryController_Has_RequestMapping(SpringappApplicationTests.java:498)
-
-com.examly.springapp.SpringappApplicationTests.Day7_test_BookCategoryController_Has_PathVariable  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @PathVariable found in BookCategoryController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookCategoryController_Has_PathVariable(SpringappApplicationTests.java:526)
+Tests run: 80, Failures: 29, Errors: 0, Skipped: 0, Time elapsed: 3.986 s <<< FAILURE! - in com.examly.springapp.SpringappApplicationTests
+com.examly.springapp.SpringappApplicationTests.Day6_test_BookController_Has_RestController_Annotation  Time elapsed: 0.003 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: BookController class not found.
+	at com.examly.springapp.SpringappApplicationTests.Day6_test_BookController_Has_RestController_Annotation(SpringappApplicationTests.java:341)
 
 com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_RequestMapping  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @RequestMapping found on BookController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_RequestMapping(SpringappApplicationTests.java:557)
+org.opentest4j.AssertionFailedError: BookController class not found.
+	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_RequestMapping(SpringappApplicationTests.java:560)
 
-com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_RequestMapping  Time elapsed: 0.002 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_RequestMapping  Time elapsed: 0.003 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: No @RequestMapping found on BorrowController ==> expected: <true> but was: <false>
 	at com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_RequestMapping(SpringappApplicationTests.java:587)
 
 com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_PathVariable  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @PathVariable found in BookController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_PathVariable(SpringappApplicationTests.java:615)
+org.opentest4j.AssertionFailedError: BookController class not found.
+	at com.examly.springapp.SpringappApplicationTests.Day7_test_BookController_Has_PathVariable(SpringappApplicationTests.java:618)
 
-com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_PathVariable  Time elapsed: 0.002 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_PathVariable  Time elapsed: 0.001 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: No @PathVariable found in BorrowController ==> expected: <true> but was: <false>
 	at com.examly.springapp.SpringappApplicationTests.Day7_test_BorrowController_Has_PathVariable(SpringappApplicationTests.java:643)
 
-com.examly.springapp.SpringappApplicationTests.Day7_test_FineController_Has_RequestMapping  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: No @RequestMapping found on FineController ==> expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day7_test_FineController_Has_RequestMapping(SpringappApplicationTests.java:674)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BookCategoryService_File_Exists  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BookCategoryService_File_Exists(SpringappApplicationTests.java:686)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BookService_File_Exists  Time elapsed: 0.004 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BookService_File_Exists(SpringappApplicationTests.java:693)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_MemberService_File_Exists  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_MemberService_File_Exists(SpringappApplicationTests.java:699)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BorrowService_File_Exists  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BorrowService_File_Exists(SpringappApplicationTests.java:706)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_FineService_File_Exists  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_FineService_File_Exists(SpringappApplicationTests.java:713)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BookCategoryServiceImpl_File_Exists  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BookCategoryServiceImpl_File_Exists(SpringappApplicationTests.java:719)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BookServiceImpl_File_Exists  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BookServiceImpl_File_Exists(SpringappApplicationTests.java:726)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_MemberServiceImpl_File_Exists  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_MemberServiceImpl_File_Exists(SpringappApplicationTests.java:733)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_BorrowServiceImpl_File_Exists  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_BorrowServiceImpl_File_Exists(SpringappApplicationTests.java:740)
-
-com.examly.springapp.SpringappApplicationTests.Day8_test_FineServiceImpl_File_Exists  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.examly.springapp.SpringappApplicationTests.Day8_test_FineServiceImpl_File_Exists(SpringappApplicationTests.java:746)
-
-com.examly.springapp.SpringappApplicationTests.Day8_testAddBookCategory  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<201> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day8_testAddBookCategory(SpringappApplicationTests.java:759)
-
-com.examly.springapp.SpringappApplicationTests.Day8_testGetAllBookCategories  Time elapsed: 0.004 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day8_testGetAllBookCategories(SpringappApplicationTests.java:769)
-
-com.examly.springapp.SpringappApplicationTests.Day8_testGetBookCategoryById  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day8_testGetBookCategoryById(SpringappApplicationTests.java:781)
-
-com.examly.springapp.SpringappApplicationTests.Day8_testUpdateBookCategory  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.examly.springapp.SpringappApplicationTests.Day8_testUpdateBookCategory(SpringappApplicationTests.java:796)
-
-com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageNumberApplied  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageNumberApplied  Time elapsed: 0.007 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageNumberApplied(SpringappApplicationTests.java:808)
 
-com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageSizeApplied  Time elapsed: 0.003 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageSizeApplied  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageSizeApplied(SpringappApplicationTests.java:819)
 
-com.examly.springapp.SpringappApplicationTests.Day9_testPagination_SortingPresent  Time elapsed: 0.003 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day9_testPagination_SortingPresent  Time elapsed: 0.005 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_SortingPresent(SpringappApplicationTests.java:830)
 
@@ -137,11 +42,11 @@ com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalElements
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalElementsExists(SpringappApplicationTests.java:852)
 
-com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalPagesExists  Time elapsed: 0.003 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalPagesExists  Time elapsed: 0.005 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalPagesExists(SpringappApplicationTests.java:863)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testAddBook  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testAddBook  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<201> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testAddBook(SpringappApplicationTests.java:877)
 
@@ -149,39 +54,39 @@ com.examly.springapp.SpringappApplicationTests.Day10_testGetAllBooks  Time elaps
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testGetAllBooks(SpringappApplicationTests.java:888)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testGetBookById  Time elapsed: 0.005 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testGetBookById  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testGetBookById(SpringappApplicationTests.java:900)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testUpdateBook  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testUpdateBook  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testUpdateBook(SpringappApplicationTests.java:916)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testAddMember  Time elapsed: 0.005 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testAddMember  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<201> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testAddMember(SpringappApplicationTests.java:933)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testGetAllMembers  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testGetAllMembers  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testGetAllMembers(SpringappApplicationTests.java:947)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testGetMemberById  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testGetMemberById  Time elapsed: 0.002 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testGetMemberById(SpringappApplicationTests.java:958)
 
-com.examly.springapp.SpringappApplicationTests.Day10_testUpdateMember  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day10_testUpdateMember  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day10_testUpdateMember(SpringappApplicationTests.java:975)
 
-com.examly.springapp.SpringappApplicationTests.Day11_testGetMembersByPhone  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day11_testGetMembersByPhone  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day11_testGetMembersByPhone(SpringappApplicationTests.java:989)
 
-com.examly.springapp.SpringappApplicationTests.Day12_testGetBooksByCategoryName  Time elapsed: 0.027 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day12_testGetBooksByCategoryName  Time elapsed: 0.005 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day12_testGetBooksByCategoryName(SpringappApplicationTests.java:1001)
 
-com.examly.springapp.SpringappApplicationTests.Day12_testGetMemberByEmail  Time elapsed: 0.005 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day12_testGetMemberByEmail  Time elapsed: 0.004 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day12_testGetMemberByEmail(SpringappApplicationTests.java:1014)
 
@@ -193,7 +98,7 @@ com.examly.springapp.SpringappApplicationTests.Day12_testGetBookByTitle  Time el
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day12_testGetBookByTitle(SpringappApplicationTests.java:1037)
 
-com.examly.springapp.SpringappApplicationTests.Day12_testGetBookByTitle_NotFound  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day12_testGetBookByTitle_NotFound  Time elapsed: 0.031 s  <<< FAILURE!
 java.lang.AssertionError: Response content expected:<No book found with title: Unknown Book> but was:<>
 	at com.examly.springapp.SpringappApplicationTests.Day12_testGetBookByTitle_NotFound(SpringappApplicationTests.java:1049)
 
