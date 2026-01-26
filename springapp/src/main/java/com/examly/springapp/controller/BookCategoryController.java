@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examly.springapp.model.Book;
 import com.examly.springapp.model.BookCategory;
 import com.examly.springapp.service.BookCategoryServiceImpl;
-import com.examly.springapp.service.BookService;
+
 
 @RestController
 @RequestMapping("/api/book-categories")

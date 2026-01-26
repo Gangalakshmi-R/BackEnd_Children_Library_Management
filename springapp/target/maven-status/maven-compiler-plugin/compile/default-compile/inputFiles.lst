@@ -8,6 +8,7 @@
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/service/MemberService.java
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/controller/BorrowController.java
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/repository/FineRepo.java
+/home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/exception/GlobalExceptionHandler.java
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/service/BorrowService.java
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/repository/BorrowRepo.java
 /home/coder/project/workspace/springapp/src/main/java/com/examly/springapp/service/BookServiceImpl.java
