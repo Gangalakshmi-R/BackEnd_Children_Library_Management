@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: com.examly.springapp.SpringappApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 80, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 3.605 s <<< FAILURE! - in com.examly.springapp.SpringappApplicationTests
+Tests run: 80, Failures: 6, Errors: 0, Skipped: 0, Time elapsed: 5.948 s <<< FAILURE! - in com.examly.springapp.SpringappApplicationTests
 com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageNumberApplied  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_PageNumberApplied(SpringappApplicationTests.java:808)
@@ -18,7 +18,7 @@ com.examly.springapp.SpringappApplicationTests.Day9_testPagination_ContentArrayE
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_ContentArrayExists(SpringappApplicationTests.java:841)
 
-com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalElementsExists  Time elapsed: 0.004 s  <<< FAILURE!
+com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalElementsExists  Time elapsed: 0.003 s  <<< FAILURE!
 java.lang.AssertionError: Status expected:<200> but was:<404>
 	at com.examly.springapp.SpringappApplicationTests.Day9_testPagination_TotalElementsExists(SpringappApplicationTests.java:852)
 

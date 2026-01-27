@@ -2,8 +2,6 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import com.examly.springapp.model.BookCategory;
 
 public interface BookCategoryService {
@@ -18,5 +16,4 @@ public interface BookCategoryService {
 
     void delete(Long id);
 
-    // Page<BookCategory> getCategoriesPaginated(int page, int size);
 }
