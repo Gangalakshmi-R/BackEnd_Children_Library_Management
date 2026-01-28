@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.BookCategory;
 import com.examly.springapp.repository.BookCategoryRepo;
 
 @Service
-public class BookCategoryServiceImpl {
+public class BookCategoryServiceImpl implements BookCategoryService{
 
     @Autowired
     private BookCategoryRepo bkCatRep;
@@ -59,5 +62,11 @@ public class BookCategoryServiceImpl {
         } else {
             return;
         }
+    }
+
+    public Page<BookCategory> pages(int pgNo,int pgSize){
+        Pageable pg = PageRequest.of(pgNo, pgSize);
+        return bkCatRep.findAll(pg);
+       
     }
 }

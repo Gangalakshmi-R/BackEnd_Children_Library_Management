@@ -3,6 +3,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -72,4 +73,9 @@ public class BookCategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/page/{pageNo}/{pageSize}")
+    public ResponseEntity<Page<BookCategory>> pages(@PathVariable int pageNo, @PathVariable int pageSize){
+        Page<BookCategory> pg = bkserv.pages(pageNo,pageSize);
+        return new ResponseEntity<>(pg,HttpStatus.OK);
+    }
 }

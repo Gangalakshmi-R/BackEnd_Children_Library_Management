@@ -15,6 +15,7 @@ public class Borrow {
     private Long borrowId;
     private Date returnDate;
     private Date borrowDate;
+
     @ManyToOne
     private Member child;
     @ManyToOne
@@ -68,8 +69,5 @@ public class Borrow {
     public void setBook(Book book) {
         this.book = book;
     }
-
-  
-    
 
 }
