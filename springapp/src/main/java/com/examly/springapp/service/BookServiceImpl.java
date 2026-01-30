@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Book;
@@ -14,7 +18,6 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepo bkRepo;
-
 
     public Book create(Book book) {
         try {
@@ -28,7 +31,6 @@ public class BookServiceImpl implements BookService {
         List<Book> list = bkRepo.findAll();
         return list;
     }
-
 
     public Book showById(Long id) {
         Optional<Book> obj = bkRepo.findById(id);
@@ -78,5 +80,44 @@ public class BookServiceImpl implements BookService {
         List<Book> list = bkRepo.findByTitle(title);
         return list;
     }
-    
+
+    public Page<Book> pagination(int pgNo, int pgSize) {
+        Pageable pg = PageRequest.of(pgNo, pgSize);
+        return bkRepo.findAll(pg);
+
+    }
+
+    public Page<Book> pageswithfield(int pgNo, int pgSize, String field) {
+        Sort st = Sort.by(field).ascending();
+        Pageable pg = PageRequest.of(pgNo, pgSize, st);
+        return bkRepo.findAll(pg);
+
+    }
+
+    public List<Book> filterByField(String field, String value) {
+
+        if (field == null || value == null) {
+            return List.of();
+        }
+
+        switch (field.toLowerCase()) {
+
+            case "title":
+                return bkRepo.findByTitle(value);
+
+            case "author":
+                return bkRepo.findByAuthor(value);
+
+            case "available":
+                Boolean status = Boolean.parseBoolean(value);
+                return bkRepo.findByAvailable(status);
+
+            case "category":
+                return bkRepo.findByBookCategoryCategoryName(value);
+
+            default:
+                return List.of();
+        }
+    }
+
 }

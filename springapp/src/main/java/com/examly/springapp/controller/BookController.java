@@ -3,6 +3,7 @@ package com.examly.springapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +86,33 @@ public class BookController {
 
         if (list.isEmpty()) {
             return new ResponseEntity<>("No book found with title: " + title, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/page/{pageNo}/{pageSize}")
+    public ResponseEntity<Page<Book>> pages(@PathVariable int pageNo, @PathVariable int pageSize) {
+        Page<Book> pg = bkserv.pagination(pageNo, pageSize);
+        return new ResponseEntity<>(pg, HttpStatus.OK);
+    }
+
+    @GetMapping("/page/{pageNo}/{pageSize}/{field}")
+    public ResponseEntity<Page<Book>> pageswithfield(@PathVariable int pageNo, @PathVariable int pageSize,
+            @PathVariable String field) {
+        Page<Book> pg = bkserv.pageswithfield(pageNo, pageSize, field);
+        return new ResponseEntity<>(pg, HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/{field}/{value}")
+    public ResponseEntity<List<Book>> filterByField(
+            @PathVariable String field,
+            @PathVariable String value) {
+
+        List<Book> list = bkserv.filterByField(field, value);
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<>(list, HttpStatus.OK);

@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Fine;
@@ -67,4 +71,33 @@ public class FineServiceImpl implements FineService {
             return;
         }
     }
+
+    public Page<Fine> pagination(int pageNo, int pageSize) {
+
+    Pageable pg =PageRequest.of(pageNo, pageSize);
+
+    return fineRepo.findAll(pg);
+}
+
+
+public List<Fine> sortByField(String field) {
+
+    return fineRepo.findAll(
+           Sort.by(field).ascending()
+    );
+}
+
+
+public List<Fine> filterByField(String field, String value) {
+
+    List<Fine> result = new java.util.ArrayList<>();
+    List<Fine> list = fineRepo.findAll();
+
+    if (field == null || value == null) {
+        return result;
+    }
+    return result;
+
+  }
+
 }

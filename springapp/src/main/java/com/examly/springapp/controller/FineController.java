@@ -43,13 +43,10 @@ public class FineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Fine> showById(@PathVariable Long id) {
-
         Fine fine = fineserv.showById(id);
-
         if (fine == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(fine, HttpStatus.OK);
     }
 
@@ -68,4 +65,40 @@ public class FineController {
         fineserv.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/page/{pageNo}/{pageSize}")
+    public ResponseEntity<org.springframework.data.domain.Page<Fine>> pages(
+            @PathVariable int pageNo,
+            @PathVariable int pageSize) {
+
+        org.springframework.data.domain.Page<Fine> pg = fineserv.pagination(pageNo, pageSize);
+        return new ResponseEntity<>(pg, HttpStatus.OK);
+    }
+
+    @GetMapping("/sort/{field}")
+    public ResponseEntity<List<Fine>> sortByField(@PathVariable String field) {
+
+        List<Fine> list = fineserv.sortByField(field);
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/{field}/{value}")
+    public ResponseEntity<List<Fine>> filterByField(
+            @PathVariable String field,
+            @PathVariable String value) {
+
+        List<Fine> list = fineserv.filterByField(field, value);
+
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

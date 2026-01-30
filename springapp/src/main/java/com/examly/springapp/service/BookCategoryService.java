@@ -16,4 +16,8 @@ public interface BookCategoryService {
 
     void delete(Long id);
 
+    List<BookCategory> sortByField(String field);
+
+    List<BookCategory> filterByField(String field, String value);
+
 }

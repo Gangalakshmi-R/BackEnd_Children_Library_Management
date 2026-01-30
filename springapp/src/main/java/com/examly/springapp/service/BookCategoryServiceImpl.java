@@ -13,7 +13,7 @@ import com.examly.springapp.model.BookCategory;
 import com.examly.springapp.repository.BookCategoryRepo;
 
 @Service
-public class BookCategoryServiceImpl implements BookCategoryService{
+public class BookCategoryServiceImpl implements BookCategoryService {
 
     @Autowired
     private BookCategoryRepo bkCatRep;
@@ -64,9 +64,43 @@ public class BookCategoryServiceImpl implements BookCategoryService{
         }
     }
 
-    public Page<BookCategory> pages(int pgNo,int pgSize){
+    public Page<BookCategory> pages(int pgNo, int pgSize) {
         Pageable pg = PageRequest.of(pgNo, pgSize);
         return bkCatRep.findAll(pg);
-       
+
     }
+
+    public List<BookCategory> sortByField(String field) {
+
+        return bkCatRep.findAll(
+                org.springframework.data.domain.Sort.by(field).ascending());
+    }
+
+    
+public List<BookCategory> filterByField(String field, String value) {
+
+    List<BookCategory> result = new java.util.ArrayList<>();
+    List<BookCategory> list = bkCatRep.findAll();
+
+    if (field == null || value == null) {
+        return result;
+    }
+
+    switch (field.toLowerCase()) {
+
+        case "categoryname":
+            for (BookCategory c : list) {
+                if (c.getCategoryName() != null &&
+                        c.getCategoryName().equals(value)) {
+                    result.add(c);
+                }
+            }
+            return result;
+
+        default:
+            return result;
+    }
+}
+
+
 }

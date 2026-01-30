@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.examly.springapp.model.Borrow;
@@ -73,4 +77,51 @@ public class BorrowServiceImpl implements BorrowService {
             return;
         }
     }
+
+    public Page<Borrow> pagination(int pageNo, int pageSize) {
+//check pageable
+        PageRequest pg = PageRequest.of(pageNo,pageSize);
+
+        return brRepo.findAll(pg);
+    }
+
+    public List<Borrow> sortByField(String field) {
+
+        return brRepo.findAll(Sort.by(field).ascending());
+    }
+
+    public List<Borrow> filterByField(String field, String value) {
+
+        List<Borrow> result = new java.util.ArrayList<>();
+        List<Borrow> list = brRepo.findAll();
+
+        if (field == null || value == null) {
+            return result;
+        }
+
+        switch (field.toLowerCase()) {
+
+            case "borrowdate":
+                for (Borrow b : list) {
+                    if (b.getBorrowDate() != null &&
+                            b.getBorrowDate().toString().equals(value)) {
+                        result.add(b);
+                    }
+                }
+                return result;
+
+            case "returndate":
+                for (Borrow b : list) {
+                    if (b.getReturnDate() != null &&
+                            b.getReturnDate().toString().equals(value)) {
+                        result.add(b);
+                    }
+                }
+                return result;
+
+            default:
+                return result;
+        }
+    }
+
 }

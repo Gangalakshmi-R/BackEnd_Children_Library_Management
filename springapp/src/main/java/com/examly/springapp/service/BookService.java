@@ -2,6 +2,8 @@ package com.examly.springapp.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.examly.springapp.model.Book;
 
 public interface BookService {
@@ -19,4 +21,10 @@ public interface BookService {
     List<Book> getByCategory(String categoryName);
 
     List<Book> getByTitle(String title);
+
+    Page<Book> pagination(int pgNo, int pgSize);
+
+    Page<Book> pageswithfield(int pgNo, int pgSize, String field);
+
+    List<Book> filterByField(String field, String value);
 }

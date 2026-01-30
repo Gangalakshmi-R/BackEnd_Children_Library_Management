@@ -68,4 +68,43 @@ public class BorrowController {
         brserv.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    
+@GetMapping("/page/{pageNo}/{pageSize}")
+public ResponseEntity<org.springframework.data.domain.Page<Borrow>> pages(
+        @PathVariable int pageNo,
+        @PathVariable int pageSize) {
+
+    org.springframework.data.domain.Page<Borrow> pg = brserv.pagination(pageNo, pageSize);
+    return new ResponseEntity<>(pg, HttpStatus.OK);
+}
+
+
+@GetMapping("/sort/{field}")
+public ResponseEntity<List<Borrow>> sortByField(@PathVariable String field) {
+
+    List<Borrow> list = brserv.sortByField(field);
+
+    if (list.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return new ResponseEntity<>(list, HttpStatus.OK);
+}
+
+
+@GetMapping("/filter/{field}/{value}")
+public ResponseEntity<List<Borrow>> filterByField(
+        @PathVariable String field,
+        @PathVariable String value) {
+
+    List<Borrow> list = brserv.filterByField(field, value);
+
+    if (list.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return new ResponseEntity<>(list, HttpStatus.OK);
+}
+
 }

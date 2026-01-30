@@ -78,4 +78,32 @@ public class BookCategoryController {
         Page<BookCategory> pg = bkserv.pages(pageNo,pageSize);
         return new ResponseEntity<>(pg,HttpStatus.OK);
     }
+
+    
+@GetMapping("/sort/{field}")
+public ResponseEntity<List<BookCategory>> sortByField(@PathVariable String field) {
+
+    List<BookCategory> list = bkserv.sortByField(field);
+
+    if (list.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return new ResponseEntity<>(list, HttpStatus.OK);
+}
+
+@GetMapping("/filter/{field}/{value}")
+public ResponseEntity<List<BookCategory>> filterByField(
+        @PathVariable String field,
+        @PathVariable String value) {
+
+    List<BookCategory> list = bkserv.filterByField(field, value);
+
+    if (list.isEmpty()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return new ResponseEntity<>(list, HttpStatus.OK);
+  }
+
 }
