@@ -21,6 +21,7 @@ C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\service\BorrowServiceImpl.java
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\config\SecurityConfig.java
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\service\BookCategoryService.java
+C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\config\CorsConfig.java
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\security\JwtAuthenticationFilter.java
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\service\BookServiceImpl.java
 C:\Users\GANGALAKSHMI RAJA\Desktop\BackEnd\Children_Library_Management\springapp\src\main\java\com\examly\springapp\model\Fine.java

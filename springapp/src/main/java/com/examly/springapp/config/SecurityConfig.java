@@ -6,7 +6,6 @@ import com.examly.springapp.service.CustomUserDetailsService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -55,15 +54,36 @@ public DaoAuthenticationProvider authenticationProvider() {
         return new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService);
     }
 
- @Bean
+   @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
     http
+        // ❌ disable CSRF (mandatory for JWT)
         .csrf(csrf -> csrf.disable())
-        .cors(cors -> {}) // ✅ ENABLE CORS
+
+        // 🔐 make app stateless (THIS WAS MISSING)
+        .sessionManagement(session ->
+            session.sessionCreationPolicy(
+                org.springframework.security.config.http.SessionCreationPolicy.STATELESS
+            )
+        )
+
+        // 🔑 authorization rules
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            // ✅ allow login & register
             .requestMatchers("/api/auth/**").permitAll()
+
+            // 🔒 everything else needs JWT
             .anyRequest().authenticated()
+        )
+
+        // 🔧 authentication provider
+        .authenticationProvider(authenticationProvider())
+
+        // 🔍 JWT filter
+        .addFilterBefore(
+            jwtAuthenticationFilter(),
+            UsernamePasswordAuthenticationFilter.class
         );
 
     return http.build();
