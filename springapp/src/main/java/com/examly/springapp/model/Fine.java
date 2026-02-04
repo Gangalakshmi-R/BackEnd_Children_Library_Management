@@ -9,7 +9,6 @@ import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Entity
-@Data
 public class Fine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +18,29 @@ public class Fine {
     @OneToOne
     @JoinColumn(name = "borrow_id")
     private Borrow borrow;
+
+    public Long getFineId() {
+        return fineId;
+    }
+
+    public void setFineId(Long fineId) {
+        this.fineId = fineId;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public Borrow getBorrow() {
+        return borrow;
+    }
+
+    public void setBorrow(Borrow borrow) {
+        this.borrow = borrow;
+    }
 
 }

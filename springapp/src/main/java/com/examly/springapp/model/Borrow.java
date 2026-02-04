@@ -13,7 +13,6 @@ import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Entity
-@Data
 public class Borrow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +31,45 @@ public class Borrow {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
+    public Long getBorrowId() {
+        return borrowId;
+    }
+
+    public void setBorrowId(Long borrowId) {
+        this.borrowId = borrowId;
+    }
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public Date getBorrowDate() {
+        return borrowDate;
+    }
+
+    public void setBorrowDate(Date borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+    public Member getChild() {
+        return child;
+    }
+
+    public void setChild(Member child) {
+        this.child = child;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
 }

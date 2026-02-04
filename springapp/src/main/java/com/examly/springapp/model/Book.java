@@ -10,7 +10,6 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
-// @Data
 public class Book {
 
     @Id

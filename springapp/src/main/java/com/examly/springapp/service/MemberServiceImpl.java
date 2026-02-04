@@ -6,83 +6,61 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.examly.springapp.exception.EmptyDataException;
+import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Member;
 import com.examly.springapp.repository.MemberRepo;
-
 @Service
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepo memRepo;
 
-    @Override
     public Member create(Member member) {
-        try {
-            return memRepo.save(member);
-        } catch (Exception e) {
-            return null;
-        }
+        return memRepo.save(member);
     }
 
-    @Override
     public List<Member> showAll() {
         List<Member> list = memRepo.findAll();
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No members found");
+        }
         return list;
     }
 
-    @Override
     public Member showById(Long id) {
-
-        Optional<Member> obj = memRepo.findById(id);
-
-        if (obj.isPresent()) {
-            return obj.get();
-        } else {
-            return null;
-        }
+        return memRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Member not found with id: " + id));
     }
 
-    @Override
     public Member update(Long id, Member member) {
+        Member existing = showById(id);
 
-        Optional<Member> obj = memRepo.findById(id);
+        existing.setName(member.getName());
+        existing.setPhone(member.getPhone());
+        existing.setEmail(member.getEmail());
 
-        if (obj.isPresent()) {
-
-            Member existing = obj.get();
-
-            existing.setName(member.getName());
-            existing.setPhone(member.getPhone());
-            existing.setEmail(member.getEmail());
-
-            Member updatedMember = memRepo.save(existing);
-            return updatedMember;
-        }
-
-        return null;
+        return memRepo.save(existing);
     }
 
-    @Override
     public void delete(Long id) {
-
-        Optional<Member> obj = memRepo.findById(id);
-
-        if (obj.isPresent()) {
-            memRepo.deleteById(id);
-        } else {
-            return;
-        }
+        memRepo.delete(showById(id));
     }
 
-    @Override
     public List<Member> getByPhone(String phone) {
         List<Member> list = memRepo.findByPhone(phone);
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No member found with phone: " + phone);
+        }
         return list;
     }
 
-    @Override
     public List<Member> getByEmail(String email) {
         List<Member> list = memRepo.findByEmail(email);
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No member found with email: " + email);
+        }
         return list;
     }
 }

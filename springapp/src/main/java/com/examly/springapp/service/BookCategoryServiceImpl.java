@@ -1,14 +1,13 @@
 package com.examly.springapp.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import com.examly.springapp.exception.EmptyDataException;
+import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.BookCategory;
 import com.examly.springapp.repository.BookCategoryRepo;
 
@@ -19,88 +18,76 @@ public class BookCategoryServiceImpl implements BookCategoryService {
     private BookCategoryRepo bkCatRep;
 
     public BookCategory create(BookCategory bkcat) {
-        try {
-            return bkCatRep.save(bkcat);
-        } catch (Exception e) {
-            return null;
-        }
+        return bkCatRep.save(bkcat);
     }
 
     public List<BookCategory> showAll() {
         List<BookCategory> list = bkCatRep.findAll();
         if (list.isEmpty()) {
-            return list;
-        } else {
-            return list;
+            throw new EmptyDataException("No book categories found");
         }
+        return list;
     }
 
     public BookCategory showById(Long id) {
-        Optional<BookCategory> obj = bkCatRep.findById(id);
-        if (obj.isPresent()) {
-            return obj.get();
-        } else {
-            return null;
-        }
+        return bkCatRep.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("BookCategory not found with id: " + id));
     }
 
     public BookCategory update(Long id, BookCategory category) {
-        Optional<BookCategory> obj = bkCatRep.findById(id);
-        if (obj.isPresent()) {
-            BookCategory cat = obj.get();
-            cat.setCategoryName(category.getCategoryName());
-            BookCategory updatedCategory = bkCatRep.save(cat);
-            return updatedCategory;
-        }
-        return null;
+        BookCategory existing = showById(id);
+        existing.setCategoryName(category.getCategoryName());
+        return bkCatRep.save(existing);
     }
 
     public void delete(Long id) {
-        Optional<BookCategory> obj = bkCatRep.findById(id);
-        if (obj.isPresent()) {
-            bkCatRep.deleteById(id);
-        } else {
-            return;
-        }
+        BookCategory existing = showById(id);
+        bkCatRep.delete(existing);
     }
 
     public Page<BookCategory> pages(int pgNo, int pgSize) {
         Pageable pg = PageRequest.of(pgNo, pgSize);
         return bkCatRep.findAll(pg);
-
     }
 
     public List<BookCategory> sortByField(String field) {
-
-        return bkCatRep.findAll(
-                org.springframework.data.domain.Sort.by(field).ascending());
+        List<BookCategory> list =
+                bkCatRep.findAll(Sort.by(field).ascending());
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No categories found for sorting");
+        }
+        return list;
     }
 
-    
-public List<BookCategory> filterByField(String field, String value) {
+    public List<BookCategory> filterByField(String field, String value) {
 
-    List<BookCategory> result = new java.util.ArrayList<>();
-    List<BookCategory> list = bkCatRep.findAll();
+        List<BookCategory> result = new java.util.ArrayList<>();
+        List<BookCategory> list = bkCatRep.findAll();
 
-    if (field == null || value == null) {
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No book categories available");
+        }
+
+        switch (field.toLowerCase()) {
+
+            case "categoryname":
+                for (BookCategory c : list) {
+                    if (c.getCategoryName() != null &&
+                            c.getCategoryName().equals(value)) {
+                        result.add(c);
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        if (result.isEmpty()) {
+            throw new EmptyDataException("No matching categories found");
+        }
+
         return result;
     }
-
-    switch (field.toLowerCase()) {
-
-        case "categoryname":
-            for (BookCategory c : list) {
-                if (c.getCategoryName() != null &&
-                        c.getCategoryName().equals(value)) {
-                    result.add(c);
-                }
-            }
-            return result;
-
-        default:
-            return result;
-    }
-}
-
-
 }

@@ -1,15 +1,13 @@
 package com.examly.springapp.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import com.examly.springapp.exception.EmptyDataException;
+import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Book;
 import com.examly.springapp.repository.BookRepo;
 
@@ -20,104 +18,92 @@ public class BookServiceImpl implements BookService {
     private BookRepo bkRepo;
 
     public Book create(Book book) {
-        try {
-            return bkRepo.save(book);
-        } catch (Exception e) {
-            return null;
-        }
+        return bkRepo.save(book);
     }
 
     public List<Book> showAll() {
         List<Book> list = bkRepo.findAll();
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No books found");
+        }
         return list;
     }
 
     public Book showById(Long id) {
-        Optional<Book> obj = bkRepo.findById(id);
-
-        if (obj.isPresent()) {
-            return obj.get();
-        } else {
-            return null;
-        }
+        return bkRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Book not found with id: " + id));
     }
 
     public Book update(Long id, Book book) {
-        Optional<Book> obj = bkRepo.findById(id);
+        Book existing = showById(id);
 
-        if (obj.isPresent()) {
+        existing.setTitle(book.getTitle());
+        existing.setAuthor(book.getAuthor());
+        existing.setAvailable(book.getAvailable());
+        existing.setBookCategory(book.getBookCategory());
 
-            Book bk = obj.get();
-
-            bk.setTitle(book.getTitle());
-            bk.setAuthor(book.getAuthor());
-            bk.setAvailable(book.getAvailable());
-            bk.setBookCategory(book.getBookCategory());
-
-            Book updt = bkRepo.save(bk);
-            return updt;
-        }
-
-        return null;
+        return bkRepo.save(existing);
     }
 
     public void delete(Long id) {
-        Optional<Book> obj = bkRepo.findById(id);
-
-        if (obj.isPresent()) {
-            bkRepo.deleteById(id);
-        } else {
-            return;
-        }
+        bkRepo.delete(showById(id));
     }
 
     public List<Book> getByCategory(String categoryName) {
         List<Book> list = bkRepo.findByBookCategoryCategoryName(categoryName);
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No books found for category: " + categoryName);
+        }
         return list;
     }
 
     public List<Book> getByTitle(String title) {
         List<Book> list = bkRepo.findByTitle(title);
+        if (list.isEmpty()) {
+            throw new ResourceNotFoundException("Book not found with title: " + title);
+        }
         return list;
     }
 
     public Page<Book> pagination(int pgNo, int pgSize) {
-        Pageable pg = PageRequest.of(pgNo, pgSize);
-        return bkRepo.findAll(pg);
-
+        return bkRepo.findAll(PageRequest.of(pgNo, pgSize));
     }
 
     public Page<Book> pageswithfield(int pgNo, int pgSize, String field) {
-        Sort st = Sort.by(field).ascending();
-        Pageable pg = PageRequest.of(pgNo, pgSize, st);
+        Pageable pg = PageRequest.of(pgNo, pgSize, Sort.by(field).ascending());
         return bkRepo.findAll(pg);
-
     }
 
     public List<Book> filterByField(String field, String value) {
 
-        if (field == null || value == null) {
-            return List.of();
-        }
+        List<Book> list;
 
         switch (field.toLowerCase()) {
-
             case "title":
-                return bkRepo.findByTitle(value);
+                list = bkRepo.findByTitle(value);
+                break;
 
             case "author":
-                return bkRepo.findByAuthor(value);
+                list = bkRepo.findByAuthor(value);
+                break;
 
             case "available":
-                Boolean status = Boolean.parseBoolean(value);
-                return bkRepo.findByAvailable(status);
+                list = bkRepo.findByAvailable(Boolean.parseBoolean(value));
+                break;
 
             case "category":
-                return bkRepo.findByBookCategoryCategoryName(value);
+                list = bkRepo.findByBookCategoryCategoryName(value);
+                break;
 
             default:
-                return List.of();
+                list = List.of();
         }
-    }
 
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No matching books found");
+        }
+
+        return list;
+    }
 }

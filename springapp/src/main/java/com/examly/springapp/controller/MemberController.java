@@ -19,72 +19,39 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<Member> create(@RequestBody Member member) {
-
-        Member obj = memserv.create(member);
-
-        if (obj == null) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } else {
-            return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>(memserv.create(member), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Member>> showAll() {
-
-        List<Member> list = memserv.showAll();
-
-        if (list.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(memserv.showAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Member> showById(@PathVariable Long id) {
-
-        Member member = memserv.showById(id);
-
-        if (member == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(member, HttpStatus.OK);
+        return new ResponseEntity<>(memserv.showById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Member> update(
             @PathVariable Long id,
             @RequestBody Member member) {
-
-        Member updated = memserv.update(id, member);
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+        return new ResponseEntity<>(memserv.update(id, member), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
         memserv.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/phone/{phone}")
-    public ResponseEntity<?> getByPhone(@PathVariable String phone) {
-
-        List<Member> list = memserv.getByPhone(phone);
-
-        if (list.isEmpty()) {
-            return new ResponseEntity<>("No member found with phone: " + phone, HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<List<Member>> getByPhone(@PathVariable String phone) {
+        return new ResponseEntity<>(memserv.getByPhone(phone), HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<List<Member>> getByEmail(@PathVariable String email) {
-
-        List<Member> list = memserv.getByEmail(email);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(memserv.getByEmail(email), HttpStatus.OK);
     }
 }

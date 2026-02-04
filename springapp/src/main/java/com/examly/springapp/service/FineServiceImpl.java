@@ -10,9 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.examly.springapp.exception.EmptyDataException;
+import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Fine;
 import com.examly.springapp.repository.FineRepo;
-
 @Service
 public class FineServiceImpl implements FineService {
 
@@ -20,84 +21,47 @@ public class FineServiceImpl implements FineService {
     private FineRepo fineRepo;
 
     public Fine create(Fine fine) {
-        try {
-            return fineRepo.save(fine);
-        } catch (Exception e) {
-            return null;
-        }
+        return fineRepo.save(fine);
     }
 
     public List<Fine> showAll() {
         List<Fine> list = fineRepo.findAll();
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No fines found");
+        }
         return list;
     }
 
     public Fine showById(Long id) {
-
-        Optional<Fine> obj = fineRepo.findById(id);
-
-        if (obj.isPresent()) {
-            return obj.get();
-        } else {
-            return null;
-        }
+        return fineRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Fine not found with id: " + id));
     }
 
     public Fine update(Long id, Fine fine) {
-
-        Optional<Fine> obj = fineRepo.findById(id);
-
-        if (obj.isPresent()) {
-
-            Fine existing = obj.get();
-
-            existing.setBorrow(fine.getBorrow());
-            existing.setAmount(fine.getAmount());
-
-            Fine updatedFine = fineRepo.save(existing);
-            return updatedFine;
-        }
-
-        return null;
+        Fine existing = showById(id);
+        existing.setBorrow(fine.getBorrow());
+        existing.setAmount(fine.getAmount());
+        return fineRepo.save(existing);
     }
 
     public void delete(Long id) {
-
-        Optional<Fine> obj = fineRepo.findById(id);
-
-        if (obj.isPresent()) {
-            fineRepo.deleteById(id);
-        } else {
-            return;
-        }
+        fineRepo.delete(showById(id));
     }
 
     public Page<Fine> pagination(int pageNo, int pageSize) {
-
-    Pageable pg =PageRequest.of(pageNo, pageSize);
-
-    return fineRepo.findAll(pg);
-}
-
-
-public List<Fine> sortByField(String field) {
-
-    return fineRepo.findAll(
-           Sort.by(field).ascending()
-    );
-}
-
-
-public List<Fine> filterByField(String field, String value) {
-
-    List<Fine> result = new java.util.ArrayList<>();
-    List<Fine> list = fineRepo.findAll();
-
-    if (field == null || value == null) {
-        return result;
+        return fineRepo.findAll(PageRequest.of(pageNo, pageSize));
     }
-    return result;
 
-  }
+    public List<Fine> sortByField(String field) {
+        List<Fine> list = fineRepo.findAll(Sort.by(field).ascending());
+        if (list.isEmpty()) {
+            throw new EmptyDataException("No fine data found");
+        }
+        return list;
+    }
 
+    public List<Fine> filterByField(String field, String value) {
+        throw new EmptyDataException("Filtering not supported for Fine");
+    }
 }

@@ -1,0 +1,80 @@
+.fines-container {
+  padding: 20px;
+  margin-top: 70px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fines-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.fines-header h1 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.fines-table {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.fines-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fines-table th {
+  background-color: #f8f9fa;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.fines-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.fines-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.fine-form {
+  padding: 20px;
+}
+
+.fine-form .form-group {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .fines-container {
+    padding: 15px;
+    margin-top: 60px;
+  }
+  
+  .fines-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .fines-table {
+    overflow-x: auto;
+  }
+  
+  .fines-table table {
+    min-width: 600px;
+  }
+}
