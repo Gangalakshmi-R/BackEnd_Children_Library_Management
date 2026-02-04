@@ -10,16 +10,34 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  // Do NOT send token for auth endpoints
+  if (!config.url.includes('/auth')) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
 
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', error.response?.data || error.message);
+    return Promise.reject(error);
+  }
+);
+
 export const authService = {
-  login: (credentials) => api.post('/auth/signin', credentials),
-  signup: (userData) => api.post('/auth/signup', userData),
+  login: (credentials) => {
+    console.log('Login request:', credentials);
+    return api.post('/auth/signin', credentials);
+  },
+  signup: (userData) => {
+    console.log('Signup request:', userData);
+    return api.post('/auth/signup', userData);
+  },
 };
 
 export const bookService = {

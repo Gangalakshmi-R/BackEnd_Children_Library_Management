@@ -25,7 +25,7 @@ public class BookController {
         return new ResponseEntity<>(bkserv.create(book), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('LIBRARIAN','MEMBER')")
+    @PreAuthorize("hasAnyRole('LIBRARIAN')")
     @GetMapping
     public ResponseEntity<List<Book>> showAll() {
         return new ResponseEntity<>(bkserv.showAll(), HttpStatus.OK);

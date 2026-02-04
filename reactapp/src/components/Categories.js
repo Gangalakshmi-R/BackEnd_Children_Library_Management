@@ -9,8 +9,7 @@ const Categories = ({ userRole }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
-    categoryName: '',
-    description: ''
+    categoryName: ''
   });
 
   useEffect(() => {
@@ -48,8 +47,7 @@ const Categories = ({ userRole }) => {
   const handleEdit = (category) => {
     setEditingCategory(category);
     setFormData({
-      categoryName: category.categoryName,
-      description: category.description || ''
+      categoryName: category.categoryName
     });
     setShowModal(true);
   };
@@ -68,8 +66,7 @@ const Categories = ({ userRole }) => {
 
   const resetForm = () => {
     setFormData({
-      categoryName: '',
-      description: ''
+      categoryName: ''
     });
     setEditingCategory(null);
     setShowModal(false);
@@ -111,7 +108,6 @@ const Categories = ({ userRole }) => {
           <div key={category.categoryId} className="category-card">
             <div className="category-info">
               <h3>{category.categoryName}</h3>
-              <p>{category.description || 'No description available'}</p>
             </div>
             {userRole === 'librarian' && (
               <div className="category-actions">
@@ -148,15 +144,6 @@ const Categories = ({ userRole }) => {
                   value={formData.categoryName}
                   onChange={(e) => setFormData({...formData, categoryName: e.target.value})}
                   required
-                />
-              </div>
-              <div className="form-group">
-                <label>Description</label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
-                  rows="3"
-                  placeholder="Optional description..."
                 />
               </div>
               <div className="form-actions">

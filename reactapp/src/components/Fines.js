@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { fineService, memberService } from '../services/api';
+import { fineService, borrowService } from '../services/api';
 import '../styles/Fines.css';
 
 const Fines = ({ userRole }) => {
   const [fines, setFines] = useState([]);
-  const [members, setMembers] = useState([]);
+  const [borrows, setBorrows] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingFine, setEditingFine] = useState(null);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     amount: '',
-    reason: '',
-    paid: false,
-    member: { memberId: '' }
+    borrow: { borrowId: '' }
   });
 
   useEffect(() => {
     fetchFines();
-    fetchMembers();
+    fetchBorrows();
   }, []);
 
   const fetchFines = async () => {
@@ -31,12 +29,12 @@ const Fines = ({ userRole }) => {
     }
   };
 
-  const fetchMembers = async () => {
+  const fetchBorrows = async () => {
     try {
-      const response = await memberService.getAll();
-      setMembers(response.data);
+      const response = await borrowService.getAll();
+      setBorrows(response.data);
     } catch (error) {
-      console.error('Error fetching members:', error);
+      console.error('Error fetching borrows:', error);
     }
   };
 
@@ -44,9 +42,8 @@ const Fines = ({ userRole }) => {
     e.preventDefault();
     try {
       const fineData = {
-        ...formData,
         amount: parseFloat(formData.amount),
-        member: { memberId: parseInt(formData.member.memberId) }
+        borrow: { borrowId: parseInt(formData.borrow.borrowId) }
       };
 
       if (editingFine) {
@@ -67,9 +64,7 @@ const Fines = ({ userRole }) => {
     setEditingFine(fine);
     setFormData({
       amount: fine.amount,
-      reason: fine.reason,
-      paid: fine.paid,
-      member: { memberId: fine.member?.memberId || '' }
+      borrow: { borrowId: fine.borrow?.borrowId || '' }
     });
     setShowModal(true);
   };
@@ -89,9 +84,7 @@ const Fines = ({ userRole }) => {
   const resetForm = () => {
     setFormData({
       amount: '',
-      reason: '',
-      paid: false,
-      member: { memberId: '' }
+      borrow: { borrowId: '' }
     });
     setEditingFine(null);
     setShowModal(false);
@@ -120,10 +113,8 @@ const Fines = ({ userRole }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Member</th>
               <th>Amount</th>
-              <th>Reason</th>
-              <th>Status</th>
+              <th>Borrow ID</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -131,14 +122,8 @@ const Fines = ({ userRole }) => {
             {fines.map((fine) => (
               <tr key={fine.fineId}>
                 <td>{fine.fineId}</td>
-                <td>{fine.member?.name || 'Unknown Member'}</td>
                 <td>${fine.amount}</td>
-                <td>{fine.reason}</td>
-                <td>
-                  <span className={`status ${fine.paid ? 'paid' : 'unpaid'}`}>
-                    {fine.paid ? 'Paid' : 'Unpaid'}
-                  </span>
-                </td>
+                <td>{fine.borrow?.borrowId || 'N/A'}</td>
                 <td>
                   <div className="action-buttons">
                     {userRole === 'librarian' && (
@@ -174,19 +159,19 @@ const Fines = ({ userRole }) => {
             </div>
             <form onSubmit={handleSubmit} className="fine-form">
               <div className="form-group">
-                <label>Member</label>
+                <label>Borrow Record</label>
                 <select
-                  value={formData.member.memberId}
+                  value={formData.borrow.borrowId}
                   onChange={(e) => setFormData({
                     ...formData, 
-                    member: { memberId: e.target.value }
+                    borrow: { borrowId: e.target.value }
                   })}
                   required
                 >
-                  <option value="">Select Member</option>
-                  {members.map((member) => (
-                    <option key={member.memberId} value={member.memberId}>
-                      {member.name} - {member.email}
+                  <option value="">Select Borrow Record</option>
+                  {borrows.map((borrow) => (
+                    <option key={borrow.borrowId} value={borrow.borrowId}>
+                      Borrow #{borrow.borrowId} - {borrow.book?.title || 'Unknown Book'}
                     </option>
                   ))}
                 </select>
@@ -200,25 +185,6 @@ const Fines = ({ userRole }) => {
                   onChange={(e) => setFormData({...formData, amount: e.target.value})}
                   required
                 />
-              </div>
-              <div className="form-group">
-                <label>Reason</label>
-                <textarea
-                  value={formData.reason}
-                  onChange={(e) => setFormData({...formData, reason: e.target.value})}
-                  required
-                  rows="3"
-                />
-              </div>
-              <div className="form-group checkbox-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={formData.paid}
-                    onChange={(e) => setFormData({...formData, paid: e.target.checked})}
-                  />
-                  Paid
-                </label>
               </div>
               <div className="form-actions">
                 <button type="button" onClick={resetForm} className="cancel-btn">
